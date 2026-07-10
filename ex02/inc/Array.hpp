@@ -1,6 +1,6 @@
 #ifndef ARRAY_HPP
 #define ARRAY_HPP
-
+#include <iostream>
 template <typename T>
 class Array
 {
@@ -9,28 +9,28 @@ class Array
         unsigned int _size;
 
     public:
-        Array() : _elemnents(NULL), _size(0){}
+        Array() : _elements(NULL), _size(0){}
         // 2. Construction with an unsigned int n: Creates an array of n elements initialized by default.
     // Note: Using `new T[n]()` ensures value-initialization (e.g., ints
         Array(unsigned int n) : _size(n)
         {
-            if(size > 0)
+            if(_size > 0)
             {
-                _elements = new T[size]();
+                _elements = new T[_size]();
             }
             else
             {
                 _elements = NULL;
             }
         }
-        Array(const Array &copy)
+        Array(const Array &copy) : _size(copy._size)
         {
             if(_size > 0)
             {
-                _elements = T[_size];
-                for(unsigned int = 0; i < _size;i++)
+                _elements = new T[_size];
+                for(unsigned int i = 0; i < _size;i++)
                 {
-                    _elements[i] = other._elements[i]; 
+                    _elements[i] = copy._elements[i]; 
                 }
             }
             else
@@ -42,11 +42,11 @@ class Array
         Array& operator=(const Array *other)
         {
             if(this != &other)
-                delete[] _elements
-            _size = other._size;
+                delete[] _elements;
+            _size = other->_size;
             if(_size > 0)
             {
-                _elements = T[_size];
+                _elements = new T[_size];
                 for(unsigned int i = 0; i < _size; i++)
                 {
                     _elements[i] = other->_elements[i];
@@ -56,8 +56,27 @@ class Array
             {
                 _elements = NULL;
             }
-            return *this
+            return *this;
         }
+        unsigned int size() const
+        {
+            return _size;
+        }
+
+        T& operator[](unsigned int index)
+        {
+            if(index >= _size)
+                throw std::out_of_range("Index out of bounds");
+            return _elements[index];
+        }
+
+        const T& operator[](unsigned int index) const
+        {
+            if(index >= _size)
+                throw std::out_of_range("Index out of bounds");
+            return _elements[index];
+        }
+
         ~Array()
         {
             delete[] _elements;
