@@ -27,7 +27,7 @@ class Array
         {
             if(_size > 0)
             {
-                _elements = new T[_size];
+                _elements = new T[_size]();
                 for(unsigned int i = 0; i < _size;i++)
                 {
                     _elements[i] = copy._elements[i]; 
@@ -39,23 +39,27 @@ class Array
             }
        
         }
-        Array& operator=(const Array *other)
+        Array& operator=(const Array &other)
         {
             if(this != &other)
-                delete[] _elements;
-            _size = other->_size;
+            {
+                 delete[] _elements;
+            
+               
+            _size = other._size;
             if(_size > 0)
             {
-                _elements = new T[_size];
+                _elements = new T[_size]();
                 for(unsigned int i = 0; i < _size; i++)
                 {
-                    _elements[i] = other->_elements[i];
+                    _elements[i] = other._elements[i];
                 }
             }
             else
             {
                 _elements = NULL;
             }
+        }
             return *this;
         }
         unsigned int size() const
@@ -79,7 +83,7 @@ class Array
 
         ~Array()
         {
-            delete[] _elements;
+            delete [] _elements;
         }
         
 };
