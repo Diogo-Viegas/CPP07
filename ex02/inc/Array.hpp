@@ -10,8 +10,6 @@ class Array
 
     public:
         Array() : _elements(NULL), _size(0){}
-        // 2. Construction with an unsigned int n: Creates an array of n elements initialized by default.
-    // Note: Using `new T[n]()` ensures value-initialization (e.g., ints
         Array(unsigned int n) : _size(n)
         {
             if(_size > 0)
